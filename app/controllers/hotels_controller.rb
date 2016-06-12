@@ -37,7 +37,7 @@ class HotelsController < ApplicationController
   end
 
   def update
-    result = Hotels::UpdateService.new(id:  params[:id], data: hotel_params).perform!
+    result = Hotels::UpdateService.new(id: params[:id], data: hotel_params).perform!
 
     if result.success?
       redirect_to hotels_path

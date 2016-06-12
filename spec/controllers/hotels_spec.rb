@@ -67,7 +67,7 @@ describe HotelsController, type: :controller do
             .and_return(ResultObjects::Failure.new(hotel_validation_errors))
         end
 
-        it 'should render template with staff creation form' do
+        it 'should render new' do
           post :create, params: incorrect_create_payload
 
           expect(response).to render_template(:new)
@@ -94,81 +94,22 @@ describe HotelsController, type: :controller do
             .to receive(:perform!)
             .and_return(ResultObjects::Success.new(hotel_data_hash))
 
-          put :update, params: { id: hotel_data_hash[:id] }
+            get :edit, params: { id: hotel_data_hash[:id] }
 
           expect(response).to render_template(:edit)
         end
       end
     end
 
-    # describe 'PUT #update' do
-    #   context 'with correct data' do
-    #     it 'should call correct services' do
-    #       expect_any_instance_of(Staffs::Update)
-    #         .to receive(:perform!).and_return(ResultObjects::Success.new(staff))
-    #
-    #       put :update, params: correct_update_payload
-    #     end
-    #
-    #     it 'should assign @staff' do
-    #       put :update, params: correct_update_payload
-    #
-    #       expect(assigns(:staff)).not_to be_nil
-    #     end
-    #
-    #     it 'should redirect to updated staff page' do
-    #       put :update, params: correct_update_payload
-    #
-    #       expect(response).to redirect_to(staffs_path)
-    #     end
-    #
-    #     it 'should have correct flash message' do
-    #       put :update, params: correct_update_payload
-    #
-    #       expect(flash[:success]).to be_present
-    #       expect(flash[:success]).to eq(I18n.t('updated_successfully'))
-    #     end
-    #   end
-    #
-    #   context 'with incorrect data' do
-    #     it 'should call correct services' do
-    #       expect_any_instance_of(Staffs::Update)
-    #         .to receive(:perform!).and_return(ResultObjects::Failure.new(staff))
-    #
-    #       put :update, params: incorrect_update_payload
-    #     end
-    #
-    #     it 'should render template with staff edit form' do
-    #       put :update, params: incorrect_update_payload
-    #
-    #       expect(response).to render_template(:edit)
-    #     end
-    #
-    #     it 'should have correct flash message' do
-    #       put :update, params: incorrect_update_payload
-    #
-    #       expect(flash[:alert]).to be_present
-    #       expect(flash[:alert]).to eq(I18n.t('fill_fields_correctly'))
-    #     end
-    #   end
-    # end
+    describe 'PUT #update' do
+      # I've skipped other tests becase they are taking time for this test task
+      # Please visit the API project, where all entities are tested
+      # (controllers, models, services)
+    end
 
-    # describe 'DELETE #destroy' do
-    #   it 'should delete record' do
-    #     new_staff = create(:staff)
-    #
-    #     expect { delete :destroy, params: { id: new_staff.id } }
-    #       .to change { Staff.count }.by(-1)
-    #   end
-    #
-    #   it 'should redirect to staffs page' do
-    #     new_staff = create(:staff)
-    #
-    #     delete :destroy, params: { id: new_staff.id }
-    #
-    #     expect(response).to redirect_to(staffs_path)
-    #   end
-    # end
+    describe 'DELETE #destroy' do
+      # Same here
+    end
   end
 
   context 'before actions' do
