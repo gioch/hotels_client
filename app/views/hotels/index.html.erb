@@ -1,5 +1,15 @@
+<h2>Hotels</h2>
+
 <% if @hotels.count > 0 %>
-  Suka
+  <% @hotels.each do |hotel| %>
+    Name: <b><%= hotel['name'] %></b><br>
+    Address: <b><%= hotel['address'] %></b><br>
+    Accomodation: <b><%= hotel['accomodation_type']['name'] %></b> <br>
+    <%= link_to 'Show', hotel_path(hotel['id']) %> |
+    <%= link_to 'Edit', edit_hotel_path(hotel['id']) %> </br>
+    <%= link_to 'Delete', hotel_path(hotel['id']), method: :delete %> </br>
+    <hr>
+  <% end %>
 <% else %>
   No Hotels Found
 <% end %>

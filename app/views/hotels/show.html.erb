@@ -1,0 +1,12 @@
+<h2>Hotel</h2>
+
+<% if @hotel.present? %>
+  Name: <b><%= @hotel['name'] %></b><br>
+  Address: <b><%= @hotel['address'] %></b><br>
+  Accomodation: <b><%= @hotel['accomodation_type']['name'] %></b>
+  <hr>
+
+  <%= link_to 'Edit', edit_hotel_path(@hotel['id'])%>
+<% else %>
+  Not Found
+<% end %>

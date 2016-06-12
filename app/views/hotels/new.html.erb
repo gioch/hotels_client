@@ -1,0 +1,17 @@
+<h2>New Hotel</h2>
+
+<% if @errors.present? %>
+  <% @errors.each do |error| %>
+    <p> <%= error %> </p>
+  <% end %>
+<% end %>
+
+<%= form_tag '/hotels', method: :post do |f| %>
+  <%= text_field_tag 'name', '', { placeholder: 'Enter Name', class: 'form-control' } %> <br>
+  <%= text_field_tag 'address', '', { placeholder: 'Enter Address', class: 'form-control' } %> <br>
+  <%= text_field_tag 'star_rating', '', { placeholder: 'Enter Rating 0 - 5', class: 'form-control' } %> <br>
+  <%= select_tag 'accomodation_type_id', options_for_select(@accomodation_types.collect {|p| [ p['name'], p['id'] ] }), include_blank: 'Choose Type', class: 'form-control' %> <br>
+
+  <br>
+  <%= submit_tag 'Create', class: 'btn btn-success'  %>
+<% end %>
