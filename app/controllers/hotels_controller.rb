@@ -1,5 +1,9 @@
 class HotelsController < ApplicationController
   def index
+    response = HTTParty.get('https://evening-cliffs-68697.herokuapp.com/api/hotels')
+
+    render json: response
+    # @hotels = [1,2,3]
   end
 
   def new
