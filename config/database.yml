@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 30
+
+development:
+  <<: *default
+  database: hotels_client_development
+
+test:
+  <<: *default
+  database: hotels_client_test
+
+production:
+  <<: *default
+  database: <%= ENV['HOTELS_CLIENT_DB_NAME'] %>
+  username: <%= ENV['HOTELS_CLIENT_DB_USERNAME'] %>
+  password: <%= ENV['HOTELS_CLIENT_DB_PASSWORD'] %>
