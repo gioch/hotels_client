@@ -9,7 +9,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5.x'
 gem 'bootstrap', '~> 4.0.0.alpha3'
-gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
+gem 'jquery-ui-rails'
 gem 'httparty'
 
 group :development, :test do

@@ -13,4 +13,29 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require jquery-ui
+//= require jquery-ui/autocomplete
 //= require_tree .
+
+
+$(document).ready(function(){
+   $("#suggestions").autocomplete({
+      source: function(request, response){
+        $.ajax({
+           url: "https://evening-cliffs-68697.herokuapp.com/api/suggestions",
+           type: "GET",
+           dataType: "json",
+           data:{ query: request.term},
+           success: function(data){
+
+             response($.map( data, function(item){
+               console.log(item.suggestion)
+
+               return item.suggestion;
+             }));
+           }
+        });
+      },
+      minLength: 1
+    });
+  });

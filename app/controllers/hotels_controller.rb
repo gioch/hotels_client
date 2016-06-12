@@ -1,8 +1,18 @@
 class HotelsController < ApplicationController
   before_action :set_hotel, except: [:index, :new, :create]
 
+  def suggestions
+    query = params[:query] || ''
+
+    suggestions = HTTParty.get('https://evening-cliffs-68697.herokuapp.com/api/suggestions?query=' + query)
+
+    render json: suggestions
+  end
+
   def index
-    @hotels = HTTParty.get('https://evening-cliffs-68697.herokuapp.com/api/hotels?query=' + params[:query])
+    query = params[:query] || ''
+
+    @hotels = HTTParty.get('https://evening-cliffs-68697.herokuapp.com/api/hotels?query=' + query)
   end
 
   def new

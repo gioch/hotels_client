@@ -1,0 +1,10 @@
+<div class="row">
+  <%= form_tag '/hotels', method: :get do |f| %>
+    <div class="col-md-10">
+      <%= text_field_tag 'query', '', { id: 'suggestions', placeholder: 'Search', class: 'form-control' } %> <br>
+    </div>
+    <div class="col-md-2">
+      <%= submit_tag 'Search', class: 'btn btn-success'  %>
+    </div>
+  <% end %>
+</div>
