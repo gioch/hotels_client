@@ -15,9 +15,10 @@ gem 'httparty'
 group :development, :test do
   gem 'pry-rails'
   gem 'pry-byebug'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '3.5.0.beta1'
   gem 'rails-controller-testing', git: 'https://github.com/rails/rails-controller-testing'
   gem 'factory_girl_rails'
+  gem 'ffaker', '~> 2.1'
   gem 'database_cleaner'
   gem 'shoulda-matchers', require: false
 end
