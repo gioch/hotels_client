@@ -27,7 +27,7 @@ I've created 2 projects
 2. Rails 5 client project, which connects to API project above
 It has implemented CRUD functionality, rspec testings (Not finished, because i've used rspec testings in API project, and here they are almost the same),
 Ajax autocomplete, which returns suggestions for hotel name/address,
-Used some design pattersn such as Service Objects
+Used some design patterns such as Service Objects
 
 It is also hosted on Heroku, as separated project.
 * Please visit it here: https://mighty-beyond-12582.herokuapp.com/
