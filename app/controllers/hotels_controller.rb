@@ -2,17 +2,15 @@ class HotelsController < ApplicationController
   before_action :set_hotel, except: [:index, :new, :create]
 
   def suggestions
-    query = params[:query] || ''
+    result = Hotels::SuggestionsService.new(query: search_query).perform!
 
-    suggestions = HTTParty.get('https://evening-cliffs-68697.herokuapp.com/api/suggestions?query=' + query)
-
-    render json: suggestions
+    render json: result.data
   end
 
   def index
-    query = params[:query] || ''
+    result = Hotels::ListService.new(query: search_query).perform!
 
-    @hotels = HTTParty.get('https://evening-cliffs-68697.herokuapp.com/api/hotels?query=' + query)
+    @hotels = result.data
   end
 
   def new
@@ -20,16 +18,14 @@ class HotelsController < ApplicationController
   end
 
   def create
-    result = HTTParty.post('https://evening-cliffs-68697.herokuapp.com/api/hotels',
-            body: hotel_params.to_json,
-            headers: { 'Content-Type' => 'application/json' } )
+    result = Hotels::CreateService.new(data: hotel_params).perform!
 
-    if result['errors'].present?
-      @accomodation_types = accomodations
-      @errors = result['errors']
-      render 'new'
-    else
+    if result.success?
       redirect_to hotels_path
+    else
+      @accomodation_types = accomodations
+      @errors = result.errors
+      render 'new'
     end
   end
 
@@ -41,24 +37,22 @@ class HotelsController < ApplicationController
   end
 
   def update
-    result = HTTParty.put('https://evening-cliffs-68697.herokuapp.com/api/hotels/' + params[:id],
-            body: hotel_params.to_json,
-            headers: { 'Content-Type' => 'application/json' } )
+    result = Hotels::UpdateService.new(id:  params[:id], data: hotel_params).perform!
 
-    if result['errors'].present?
-      @accomodation_types = accomodations
-      @errors = result['errors']
-      render 'edit'
-    else
+    if result.success?
       redirect_to hotels_path
+    else
+      @accomodation_types = accomodations
+      @errors = result.errors
+      render 'edit'
     end
   end
 
   def destroy
-    result = HTTParty.delete('https://evening-cliffs-68697.herokuapp.com/api/hotels/' + params[:id])
+    result = Hotels::DeleteService.new(id: params[:id]).perform!
 
-    if result['errors'].present?
-      flash[:alert] = result['errors'].first
+    if result.failure?
+      flash[:alert] = result.errors
     end
 
     redirect_to hotels_path
@@ -66,12 +60,24 @@ class HotelsController < ApplicationController
 
 private
 
+  def search_query
+    params[:query] || ''
+  end
+
   def accomodations
-    HTTParty.get('https://evening-cliffs-68697.herokuapp.com/api/accomodation_types')
+    result = Hotels::AccomodationsService.new.perform!
+    result.data
   end
 
   def set_hotel
-    @hotel = HTTParty.get('https://evening-cliffs-68697.herokuapp.com/api/hotels/' + params[:id])
+    result = Hotels::GetService.new(id: params[:id]).perform!
+
+    if result.success?
+      @hotel = result.data
+    else
+      flash[:alert] = result.errors
+      redirect_to hotels_path
+    end
   end
 
   def hotel_params

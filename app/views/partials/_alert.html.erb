@@ -1,0 +1,7 @@
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <% flash[:alert].each do |alert| %>
+      <%= alert %> <br>
+    <% end %>
+  </div>
+<% end %>
